@@ -32,7 +32,7 @@ final readonly class InitializerMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (SentryService::isEnabled() && (bool)$this->extensionConfiguration->get('sentry_tracing', 'enableTracing')) {
+        if (SentryService::inititalize() && (bool)$this->extensionConfiguration->get('sentry_tracing', 'enableTracing')) {
             $hub = SentrySdk::getCurrentHub();
             $options = $hub->getClient()?->getOptions();
             // modify options set by sentry client
