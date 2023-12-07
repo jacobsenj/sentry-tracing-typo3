@@ -12,7 +12,15 @@ final class TimeTrackerDecorator extends TimeTracker
 {
     private array $spanStack = [];
 
-    public function push(string $tslabel, string $value = ''): void
+    /**
+     * Pushes an element to the TypoScript tracking array
+     *
+     * @param string $tslabel Label string for the entry, eg. TypoScript property name
+     * @param string $value Additional value(?)
+     * @see \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::cObjGetSingle()
+     * @see pull()
+     */
+    public function push($tslabel, $value = '')
     {
         parent::push($tslabel, $value);
         $parent = SentrySdk::getCurrentHub()->getSpan();
@@ -28,7 +36,14 @@ final class TimeTrackerDecorator extends TimeTracker
         }
     }
 
-    public function pull(string $content = ''): void
+    /**
+     * Pulls an element from the TypoScript tracking array
+     *
+     * @param string $content The content string generated within the push/pull part.
+     * @see \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::cObjGetSingle()
+     * @see push()
+     */
+    public function pull($content = '')
     {
         parent::pull($content);
 
