@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Neusta\SentryTracing\Middlewares;
 
 use Networkteam\SentryClient\Client;
+use Networkteam\SentryClient\Service\SentryService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -31,7 +32,7 @@ final readonly class InitializerMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (Client::init() && (bool)$this->extensionConfiguration->get('sentry_tracing', 'enableTracing')) {
+        if (SentryService::isEnabled() && (bool)$this->extensionConfiguration->get('sentry_tracing', 'enableTracing')) {
             $hub = SentrySdk::getCurrentHub();
             $options = $hub->getClient()?->getOptions();
             // modify options set by sentry client
