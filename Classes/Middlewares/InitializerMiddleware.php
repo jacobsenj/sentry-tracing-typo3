@@ -24,7 +24,7 @@ use Sentry\Tracing\TransactionContext;
 
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
-final readonly class InitializerMiddleware implements MiddlewareInterface
+final class InitializerMiddleware implements MiddlewareInterface
 {
     public function __construct(private ExtensionConfiguration $extensionConfiguration)
     {
